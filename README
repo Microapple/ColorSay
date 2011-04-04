@@ -19,3 +19,16 @@ If you put 'orange' or some other random color in that spot, it will cause an in
 
 Prefix changes who the message  should appear to come from. (Default is [Server] but you can change it to [GOD] or [ADMIN])
 
+ChangeLog:
+
+1.1.0
+-Added server logging for /csay commands
+-Console logging is now: ColorSay: PLAYER [PREFIX] MESSAGE
+-Added code for Permissions support, hasn't been implemented yet
+
+1.0.7
+-Release, added OP requirement
+
+1.0.0
+-Pre-Release, /csay added
+
