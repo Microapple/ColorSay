@@ -1,6 +1,6 @@
 package m.microapple.colorsay;
 /**
- * ColorSay Version 1.0.7
+ * ColorSay Version 1.1.0
  * 
  * By Microapple
  * 
