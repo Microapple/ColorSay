@@ -13,31 +13,42 @@ import java.io.InputStream;
 import java.io.FileOutputStream;
 import java.util.jar.JarFile;
 import java.util.jar.JarEntry;
+import java.util.logging.Logger;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import com.nijiko.permissions.PermissionHandler;
+import com.nijikokun.bukkit.Permissions.Permissions;
+import org.bukkit.plugin.Plugin;
+
 
 public class ColorSay extends JavaPlugin {
 	public String color;
 	public String sayPrefix;
-	
+	public static PermissionHandler Permissions;
+    private static final Logger log = Logger.getLogger("Minecraft");
+    
+   
 	public void onEnable() {
 		PluginDescriptionFile pdfFile = this.getDescription();
 		System.out.println(pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!");
 		this.loadConfigFile();
+		setupPermissions();
         Configuration cfg = this.getConfiguration();
         color = cfg.getString("say_color", "PURPLE");
         sayPrefix = cfg.getString("say_prefix", "Server");
         System.out.println("ColorSay will use " + color + " as the say color.");
-        System.out.println("ColorSay will use [" + sayPrefix + "] as the prefix.");
+        System.out.println("ColorSay will use [" + sayPrefix + "] as the prefix.");        
 
 		}
 	public void onDisable() {
-		System.out.println("Colorsay Disabled");
+		System.out.println("ColorSay Disabled");
 	}
 	
 	public void loadConfigFile() {
@@ -66,6 +77,7 @@ public class ColorSay extends JavaPlugin {
 
 		}
 	
+	
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
         String commandName = command.getName().toLowerCase();
         
@@ -75,8 +87,13 @@ public class ColorSay extends JavaPlugin {
 						op = sender.isOp();
                     	if (op == true){
                     		if(args.length > 0) {
-                    			getServer().broadcastMessage(ChatColor.valueOf(color) + "[" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
-
+    	        	            Player player = (Player) sender;
+                    			//if (ColorSay.Permissions.has(player, "colorsay.csay") == true) {
+                        			getServer().broadcastMessage(ChatColor.valueOf(color) + "[" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
+                        			String playerName = player.getDisplayName();
+                        			log.info("ColorSay: " + playerName + ": [" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
+                    			//}
+                    			  
                     		}
                     		else {
                     			return false;
@@ -94,7 +111,19 @@ public class ColorSay extends JavaPlugin {
                 }
             }
             return true;
+            
    }
+private void setupPermissions() {
+	      Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
 
+	      if (this.Permissions == null) {
+	          if (test != null) {
+	              this.Permissions = ((Permissions)test).getHandler();
+	          } else {
+	              log.info("Permission system not detected, defaulting to OP");
+	          }
+	      }
+	  }
+	
 	
 }
