@@ -11,7 +11,7 @@ INSTALLATION:
 COMMANDS:
 /csay <message>
 
-This is the one and only command ColorSay provides, but it is useful!
+This is the one and only command ColorSay provides, but it is useful! Currently this command requires you to be an OP, but in future releases I'll add permissions support.
 In the config.yml file, there are two items that you can configure: color and prefix.
 
 Color changes the color of the CSay message. BE SURE TO USE ONLY THE COLORS LISTED IN THE CONFIG.YML FILE.
