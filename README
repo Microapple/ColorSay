@@ -1,1 +1,21 @@
-TESTING GITHUB
+
+Welcome to ColorSay!
+
+This lightweight bucket plugin will help you customize your server to your liking.
+
+INSTALLATION:
+1) Drop the ColorSay.jar into your Craftbukkit server's plugin folder.
+2) (Re)Start your server.
+3) Edit the config.yml file to your liking.
+
+COMMANDS:
+/csay <message>
+
+This is the one and only command ColorSay provides, but it is useful!
+In the config.yml file, there are two items that you can configure: color and prefix.
+
+Color changes the color of the CSay message. BE SURE TO USE ONLY THE COLORS LISTED IN THE CONFIG.YML FILE.
+If you put 'orange' or some other random color in that spot, it will cause an internal server error. (Default is LIGHT_PURPLE)
+
+Prefix changes who the message  should appear to come from. (Default is [Server] but you can change it to [GOD] or [ADMIN])
+
