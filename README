@@ -11,15 +11,27 @@ INSTALLATION:
 COMMANDS:
 /csay <message>
 
-This is the one and only command ColorSay provides, but it is useful! Currently this command requires you to be an OP, but in future releases I'll add permissions support.
+This is the one and only command ColorSay provides, but it is useful!
+This command either requires you to have the permission node 'colorsay.csay' or be
+and OP. (However, if permissions is installed, and you are an Op, you don't necessarily
+have /csay)
+
 In the config.yml file, there are two items that you can configure: color and prefix.
 
-Color changes the color of the CSay message. BE SURE TO USE ONLY THE COLORS LISTED IN THE CONFIG.YML FILE.
-If you put 'orange' or some other random color in that spot, it will cause an internal server error. (Default is LIGHT_PURPLE)
+Color changes the color of the CSay message. BE SURE TO USE ONLY THE COLORS LISTED
+IN THE CONFIG.YML FILE.
+If you put 'orange' or some other random color in that spot, it will cause an internal
+server error. (Default is LIGHT_PURPLE)
 
-Prefix changes who the message  should appear to come from. (Default is [Server] but you can change it to [GOD] or [ADMIN])
+Prefix changes who the message  should appear to come from. (Default is [Server] but you
+can change it to [GOD] or [ADMIN])
 
 ChangeLog:
+
+1.2.5
+-Implemented Permission Support (permission node 'colorsay.csay')
+-Works with or without Permissions installed. With Permissions, a player must have the
+node to use /csay, without permissions, the player must be an OP.
 
 1.1.0
 -Added server logging for /csay commands

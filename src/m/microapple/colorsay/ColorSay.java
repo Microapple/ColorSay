@@ -1,6 +1,6 @@
 package m.microapple.colorsay;
 /**
- * ColorSay Version 1.1.0
+ * ColorSay Version 1.2.5
  * 
  * By Microapple
  * 
@@ -14,7 +14,6 @@ import java.io.FileOutputStream;
 import java.util.jar.JarFile;
 import java.util.jar.JarEntry;
 import java.util.logging.Logger;
-import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -25,7 +24,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
-import org.bukkit.plugin.Plugin;
 
 
 public class ColorSay extends JavaPlugin {
@@ -33,6 +31,7 @@ public class ColorSay extends JavaPlugin {
 	public String sayPrefix;
 	public static PermissionHandler Permissions;
     private static final Logger log = Logger.getLogger("Minecraft");
+   
     
    
 	public void onEnable() {
@@ -83,36 +82,45 @@ public class ColorSay extends JavaPlugin {
         
             if (sender instanceof Player) {
                 if (commandName.equals("csay")) {
-                      	boolean op;;
-						op = sender.isOp();
-                    	if (op == true){
                     		if(args.length > 0) {
-    	        	            Player player = (Player) sender;
-                    			//if (ColorSay.Permissions.has(player, "colorsay.csay") == true) {
-                        			getServer().broadcastMessage(ChatColor.valueOf(color) + "[" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
-                        			String playerName = player.getDisplayName();
-                        			log.info("ColorSay: " + playerName + ": [" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
-                    			//}
-                    			  
+                    			if(getServer().getPluginManager().isPluginEnabled("Permissions") == true) {
+                    				//Permisions ONLINE mode
+    	        	            	Player player = (Player) sender;
+    	        	            	if (ColorSay.Permissions.has(player, "colorsay.csay") == true) {
+    	        	            		getServer().broadcastMessage(ChatColor.valueOf(color) + "[" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
+    	        	            		String playerName = player.getDisplayName();
+    	        	            		log.info("ColorSay: " + playerName + ": [" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
+    	        	            	}
+    	        	            	else {
+    	    	                        player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+    	        	            	}
+                    			} 
+                    			else {
+                    				//Permissions OFFLINE mode
+                    				boolean op;;
+            						op = sender.isOp();
+                                	if (op == true){
+        	        	            	Player player = (Player) sender;
+                                		getServer().broadcastMessage(ChatColor.valueOf(color) + "[" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
+                            			String playerName = player.getDisplayName();
+                            			log.info("ColorSay: " + playerName + ": [" + sayPrefix + "] " + Arrays.asList(args).toString().substring(1).replaceFirst("]", "").replace(", ", " "));
+                                	}
+                                	else {
+        	        	            	Player player = (Player) sender;
+    	    	                        player.sendMessage(ChatColor.RED + "You do not have access to this command.");
+
+                                	}
+                    			}
                     		}
                     		else {
                     			return false;
                     		}
-                    	}
-                    	else {
-	        	            Player player = (Player) sender;
-	                        player.sendMessage(ChatColor.RED + "This command requires you to be an Op");
-                    		
-                    	}
-                    	
-                    	
-                    	
-                    
-                }
+                    }
             }
             return true;
             
    }
+@SuppressWarnings("static-access")
 private void setupPermissions() {
 	      Plugin test = this.getServer().getPluginManager().getPlugin("Permissions");
 
@@ -120,10 +128,8 @@ private void setupPermissions() {
 	          if (test != null) {
 	              this.Permissions = ((Permissions)test).getHandler();
 	          } else {
-	              log.info("Permission system not detected, defaulting to OP");
+	              log.info("ColorSay: Permission system not detected, defaulting to OP");
 	          }
 	      }
 	  }
-	
-	
 }
